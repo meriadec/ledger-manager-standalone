@@ -1,0 +1,74 @@
+{
+  "name": "ledger-standalone-manager",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Standalone app to update firmwares / install apps",
+  "main": "src/electron.js",
+  "author": {
+    "name": "Ledger",
+    "email": "dev@ledger.fr"
+  },
+  "scripts": {
+    "react-start": "parcel -p 3000 index.html --out-dir build",
+    "react-build": "parcel build index.html --out-dir build --public-url ./",
+    "electron-build": "electron-builder",
+    "electron-build-all": "electron-builder -mwl",
+    "clean-build": "rm -rf build/ .cache dist/",
+    "build": "yarn clean-build && yarn react-build && yarn electron-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
+    "lint": "eslint src",
+    "flow": "flow",
+    "prettier": "prettier --write index.html \"src/**/*.js\""
+  },
+  "dependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^4.54.0",
+    "electron-is-dev": "1.1.0",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-icons": "^3.6.1",
+    "styled-components": "^4.2.0",
+    "styled-system": "^4.1.0"
+  },
+  "build": {
+    "appId": "com.ledger.standalone-manager",
+    "files": [
+      "src/electron.js",
+      "src/assets/*",
+      "build/**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/logo.png"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/logo.png"
+    },
+    "linux": {
+      "target": "deb",
+      "icon": "src/assets/logo.png",
+      "category": "Development"
+    }
+  },
+  "homepage": "./",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "concurrently": "4.1.0",
+    "cross-env": "5.2.0",
+    "electron": "4.1.4",
+    "electron-builder": "20.39.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-import-resolver-babel-module": "^5.0.1",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-react": "^7.12.4",
+    "flow-bin": "^0.97.0",
+    "parcel-bundler": "1.12.3",
+    "prettier": "^1.17.0",
+    "wait-on": "3.2.0"
+  }
+}
